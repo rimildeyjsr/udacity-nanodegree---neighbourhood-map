@@ -18,8 +18,10 @@
 
     <div class="box">
         <div id="side-bar">
+            <div id="show-less">Show Less</div>
             <h1>Locations of Interest in<br> San Francisco</h1>
             <input id="search-filter" placeholder="Filter Locations" type="search">
+
         </div>
         <div id="map"></div>
     </div>
@@ -31,7 +33,7 @@
         var map;
         function initMap() {
             map = new google.maps.Map(document.getElementById("map"),{
-                center: {lat: 37.7749, lng: -122.4486},
+                center: {lat: 37.7749, lng: -122.4525},
                 zoom: 13
             });
 
