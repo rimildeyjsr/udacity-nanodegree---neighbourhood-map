@@ -13,7 +13,7 @@ body {
 #map {
     bottom:0px;
     height: 100%;
-    left: 340px;
+    left: 23%;
     position: absolute;
     right: 0px;
 }
@@ -23,5 +23,5 @@ body {
     line-height: 35px;
     padding: 10px 10px 30px 10px;
     text-align: left;
-    width: 340px;
+    width: 23%;
 }
