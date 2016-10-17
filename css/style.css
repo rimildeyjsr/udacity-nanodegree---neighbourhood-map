@@ -47,12 +47,21 @@ body {
     text-align: center;
 }
 
-#search-filter {
+#enter-search {
     width: 85%;
     margin: 20px 15px 20px 10px;
     padding: 5px;
     height: 30px;
 }
 
+#filter {
+    width: 85%;
+    height: 35px;
+    margin: 20px 15px 20px 10px;
+    padding: 3px;
+    background-color: #2a52be;
+    color: white;
+    text-align: center;
+}
 
 
