@@ -19,7 +19,7 @@ body {
     z-index: -1;
 }
 #side-bar {
-    background: rgba(0,0,0,0.85);
+    background: rgba(0,0,0,0.7);
     height: 100%;
     line-height: 35px;
     padding: 10px 10px 30px 10px;
