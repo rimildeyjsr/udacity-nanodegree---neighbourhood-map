@@ -13,17 +13,20 @@ body {
 #map {
     bottom:0px;
     height: 100%;
-    left: 23%;
+    left: 0;
     position: absolute;
     right: 0px;
+    z-index: -1;
 }
 #side-bar {
-    background: #000;
+    background: rgba(0,0,0,0.85);
     height: 100%;
     line-height: 35px;
     padding: 10px 10px 30px 10px;
     text-align: left;
     width: 23%;
+    z-index: 20;
+    left:0;
 }
 
 #search-filter {
@@ -32,3 +35,4 @@ body {
     padding: 5px;
     height: 30px;
 }
+
