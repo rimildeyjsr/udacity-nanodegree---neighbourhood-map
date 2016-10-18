@@ -11,6 +11,7 @@
     <link href="css/jquery-ui.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 </head>
@@ -21,7 +22,7 @@
             <div id="show-less">Show Less</div>
             <h1>Locations of Interest in<br> San Francisco</h1>
             <input id="enter-search" placeholder="Filter Locations" type="search">
-            <div id="filter">Filter</div>
+            <div id="filter"><i class="fa fa-filter" aria-hidden="true"></i>   Filter</div>
 
         </div>
         <div id="map"></div>
@@ -30,6 +31,7 @@
 
     <script src="js/jquery-3.0.0.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
+    <script src="https://use.fontawesome.com/83638a08d2.js"></script>
     <script>
         var map;
         var markers = [];
@@ -80,6 +82,11 @@
             }
 
             map.fitBounds(bounds);
+
+            for (var i = 0 ; i < locations.length ; i++){
+                var name = locations[i].title;
+
+            }
         }
 
 
