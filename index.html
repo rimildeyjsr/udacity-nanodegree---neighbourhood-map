@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>San Francisco</title>
+    <link href="favicon.ico" rel="icon">
 
     <link href="css/normalize.css" rel="stylesheet">
     <link href="css/jquery-ui.min.css" rel="stylesheet">
@@ -23,7 +24,11 @@
             <h1>Locations of Interest in<br> San Francisco</h1>
             <input id="enter-search" placeholder="Filter Locations" type="search">
             <div id="filter"><i class="fa fa-filter" aria-hidden="true"></i>   Filter</div>
+            <div>
+                <ul class="locations">
 
+                </ul>
+            </div>
         </div>
         <div id="map"></div>
     </div>
@@ -82,10 +87,9 @@
             }
 
             map.fitBounds(bounds);
-
-            for (var i = 0 ; i < locations.length ; i++){
+            for (var i = 0 ; i < locations.length ; i++) {
                 var name = locations[i].title;
-
+                $('.locations').append('<li>'+name+'</li>');
             }
         }
 
