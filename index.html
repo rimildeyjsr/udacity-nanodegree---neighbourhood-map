@@ -17,8 +17,9 @@
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
 </head>
 <body>
-
+    <!--the entire page is housed inside this div-->
     <div class="box">
+        <!--side bar for the page-->
         <div id="side-bar">
             <div id="show-less">Show Less</div>
             <h1>Locations of Interest in<br> San Francisco</h1>
@@ -27,11 +28,13 @@
             <hr>
             <div class="loc-list">
                 <ul class="locations">
-
+                    <!-- will be populated by javascript-->
                 </ul>
             </div>
         </div>
-        <div id="map"></div>
+        <div id="map">
+            <!--the map itself! will be populated by javascript-->
+        </div>
     </div>
 
 
@@ -39,14 +42,15 @@
     <script src="js/jquery-ui.min.js"></script>
     <script src="https://use.fontawesome.com/83638a08d2.js"></script>
     <script>
-        var map;
-        var markers = [];
+        var map; //map variable
+        var markers = []; //array to push markers
         function initMap() {
+            //function to initialise the map with given coordinates
             map = new google.maps.Map(document.getElementById("map"),{
                 center: {lat: 37.7749, lng: -122.4525},
                 zoom: 13
             });
-
+            //array of locations in san francisco
             var locations = [
                 {title: 'Alcatraz Islands', location: {lat: 37.8270 , lng: -122.4230}},
                 {title: "Fisherman's Wharf", location: {lat: 37.8080 , lng: -122.4177 } },
@@ -68,13 +72,14 @@
                 {title: 'Ocean Beach', location: {lat: 37.7594 , lng: -122.5104 } },
             ];
 
+            //variable to store the bounds
             var bounds = new google.maps.LatLngBounds();
 
             for (var i = 0; i < locations.length; i++) {
 
-                var position = locations[i].location;
-                var title = locations[i].title;
-
+                var position = locations[i].location; //position of the location at ith index
+                var title = locations[i].title; //name of the location in question
+                //marker created
                 var marker = new google.maps.Marker({
                     map: map,
                     position: position,
@@ -82,13 +87,15 @@
                     animation: google.maps.Animation.DROP,
                     id: i
                 });
-
+                //push the newly created marker to the array
                 markers.push(marker);
+                //extend boundaries of the map according to the lat long of the place
                 bounds.extend(markers[i].position);
             }
-
+            //make sure the map 'fits' to the bounds
             map.fitBounds(bounds);
             for (var i = 0 ; i < locations.length ; i++) {
+                //this loop populates the side-bar with the names of the places
                 var name = locations[i].title;
                 $('.locations').append('<li>'+name+'</li>');
             }
