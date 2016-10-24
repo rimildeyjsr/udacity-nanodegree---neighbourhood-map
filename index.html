@@ -71,6 +71,12 @@
                 {title: 'San Francisco Zoo', location: {lat: 37.7330 , lng:  -122.5030 }},
                 {title: 'Ocean Beach', location: {lat: 37.7594 , lng: -122.5104 }},
             ];
+
+            for (var i = 0 ; i < locations.length ; i++) {
+                //this loop populates the side-bar with the names of the places
+                var name = locations[i].title;
+                $('.locations').append('<li>'+name+'</li>');
+            }
             var largeInfowindow = new google.maps.InfoWindow();
             //variable to store the bounds
             var bounds = new google.maps.LatLngBounds();
@@ -97,11 +103,7 @@
             }
             //make sure the map 'fits' to the bounds
             map.fitBounds(bounds);
-            for (var i = 0 ; i < locations.length ; i++) {
-                //this loop populates the side-bar with the names of the places
-                var name = locations[i].title;
-                $('.locations').append('<li>'+name+'</li>');
-            }
+
         }
 
         function populateInfoWindow(marker, infowindow) {
