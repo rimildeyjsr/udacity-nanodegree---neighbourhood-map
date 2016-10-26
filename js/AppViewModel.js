@@ -33,6 +33,10 @@ function AppViewModel (){
             {title: 'Ocean Beach', location: {lat: 37.7594 , lng: -122.5104 }},
         ]
     )
+
+    this.showInfoWindow = function (){
+
+    }
 }
 
 // Activates knockout.js
