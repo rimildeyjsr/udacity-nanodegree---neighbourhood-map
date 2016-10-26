@@ -29,8 +29,11 @@
             <label for="toggle-heart">❤</label>
             <hr>
             <div class="loc-list">
-                <ul class="locations">
-                    <!-- will be populated by javascript-->
+                <ul class="locations" data-bind="foreach: SFlocations">
+                    <!-- will be populated by knockout-->
+                    <li>
+                        <span data-bind="text: title"></span>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -76,11 +79,7 @@
                 {title: 'Ocean Beach', location: {lat: 37.7594 , lng: -122.5104 }},
             ];
 
-            for (var i = 0 ; i < locations.length ; i++) {
-                //this loop populates the side-bar with the names of the places
-                var name = locations[i].title;
-                $('.locations').append('<li>'+name+'</li>');
-            }
+
             //variable to store infowindow
             var largeInfowindow = new google.maps.InfoWindow();
             //variable to store the bounds
