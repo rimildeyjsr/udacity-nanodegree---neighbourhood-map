@@ -34,8 +34,8 @@ function AppViewModel (){
         ]
     )
 
-    this.showInfoWindow = function (){
-
+    this.liClick = function (){
+        populateInfoWindow($index,largeInfowindow);
     }
 }
 

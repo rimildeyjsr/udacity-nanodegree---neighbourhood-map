@@ -31,7 +31,7 @@
             <div class="loc-list">
                 <ul class="locations" data-bind="foreach: SFlocations">
                     <!-- will be populated by knockout-->
-                    <li data-bind="text: title">
+                    <li data-bind="text: title, click: $root.liClick">
 
                     </li>
                 </ul>
