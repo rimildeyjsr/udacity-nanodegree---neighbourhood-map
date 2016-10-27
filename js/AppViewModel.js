@@ -9,24 +9,24 @@ function initMap() {
     });
     //array of locations in san francisco
     var locations = [
-        {title: 'Alcatraz Islands', location: {lat: 37.8270 , lng: -122.4230}},
-        {title: "Fisherman's Wharf", location: {lat: 37.8080 , lng: -122.4177 }},
-        {title: 'Golden Gate Bridge', location: {lat: 37.8199 , lng: -122.4783 }},
-        {title: 'Union Square', location: {lat: 37.7879 , lng: -122.4075 }},
-        {title: 'Pier 39', location: {lat: 37.8087 , lng: -122.4098 }},
-        {title: 'Golden Gate Park', location: {lat: 37.7694 , lng: -122.4862 }},
-        {title: 'Chinatown', location: {lat: 37.7941 , lng: -122.4078 }},
-        {title: 'AT&T Park', location: {lat: 37.7786 , lng: -122.3893 }},
-        {title: 'Lombard Street', location: {lat: 37.8021 , lng: -122.4187 }},
-        {title: 'Ghirardelli Square', location: {lat: 37.8060 , lng: -122.4230 }},
-        {title: 'Coit Tower', location: {lat: 37.8024 , lng: -122.4058 }},
-        {title: 'Aquarium of the Bay', location: {lat: 37.8088 , lng: -122.4093 }},
-        {title: 'Presisdio of San Francisco', location: {lat: 37.7989 , lng: -122.4662 }},
-        {title: 'Legion of Honor', location: {lat: 37.7845 , lng: -122.5008 }},
-        {title: 'Twin Peaks', location: {lat: 37.7521 , lng: -122.4474 }},
-        {title: 'Angel Islands', location: {lat: 37.8609 , lng:-122.4326 }},
-        {title: 'San Francisco Zoo', location: {lat: 37.7330 , lng:  -122.5030 }},
-        {title: 'Ocean Beach', location: {lat: 37.7594 , lng: -122.5104 }},
+        {title: 'Alcatraz Islands', location: {lat: 37.8270 , lng: -122.4230},markerRef: null},
+        {title: "Fisherman's Wharf", location: {lat: 37.8080 , lng: -122.4177 },markerRef: null},
+        {title: 'Golden Gate Bridge', location: {lat: 37.8199 , lng: -122.4783 },markerRef: null},
+        {title: 'Union Square', location: {lat: 37.7879 , lng: -122.4075 },markerRef: null},
+        {title: 'Pier 39', location: {lat: 37.8087 , lng: -122.4098 },markerRef: null},
+        {title: 'Golden Gate Park', location: {lat: 37.7694 , lng: -122.4862 },markerRef: null},
+        {title: 'Chinatown', location: {lat: 37.7941 , lng: -122.4078 },markerRef: null},
+        {title: 'AT&T Park', location: {lat: 37.7786 , lng: -122.3893 },markerRef: null},
+        {title: 'Lombard Street', location: {lat: 37.8021 , lng: -122.4187 },markerRef: null},
+        {title: 'Ghirardelli Square', location: {lat: 37.8060 , lng: -122.4230 },markerRef: null},
+        {title: 'Coit Tower', location: {lat: 37.8024 , lng: -122.4058 },markerRef: null},
+        {title: 'Aquarium of the Bay', location: {lat: 37.8088 , lng: -122.4093 },markerRef: null},
+        {title: 'Presisdio of San Francisco', location: {lat: 37.7989 , lng: -122.4662 },markerRef: null},
+        {title: 'Legion of Honor', location: {lat: 37.7845 , lng: -122.5008 },markerRef: null},
+        {title: 'Twin Peaks', location: {lat: 37.7521 , lng: -122.4474 },markerRef: null},
+        {title: 'Angel Islands', location: {lat: 37.8609 , lng:-122.4326 },markerRef: null},
+        {title: 'San Francisco Zoo', location: {lat: 37.7330 , lng:  -122.5030 },markerRef: null},
+        {title: 'Ocean Beach', location: {lat: 37.7594 , lng: -122.5104 },markerRef: null},
     ];
 
 
@@ -48,6 +48,7 @@ function initMap() {
             id: i
         });
         //push the newly created marker to the array
+        locations[i].markerRef = marker;
         markers.push(marker);
         marker.addListener('click', function() {
             //will call the function to populate the infowindow
@@ -74,20 +75,21 @@ function initMap() {
 
         this.locations = ko.observableArray (locations);
 
-        this.liClick = function (){
+        this.liClick = function (location){
 
-            this.marker = new google.maps.Marker({
-                map: map,
-                position: this.location,
-                title: this.title
-            });
-            markers.push(this.marker);
-            populateInfoWindow(this.marker,largeInfowindow);
+            populateInfoWindow(location.markerRef,largeInfowindow);
         }
 
     }
 
-
+    this.colorVal = ko.observable(false);
+    this.changeColor = ko.pureComputed(function (){
+       return this.colorChanger() === 'true'? "red" : "grey";
+        console.log(this.colorVal);
+    });
+    this.colorChanger = function(){
+        return (!this.colorVal);
+    }
 
     // Activates knockout.js
     ko.applyBindings(new AppViewModel());

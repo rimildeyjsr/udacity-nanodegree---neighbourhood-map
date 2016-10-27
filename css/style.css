@@ -60,30 +60,30 @@ body {
 #filter {
     width: 87%;
     height: 45px;
-    margin: 20px 15px 30px 10px;
+    margin: 20px 15px 15px 10px;
     padding: 3px;
     background-color: #5286d1;
     color: white;
     text-align: center;
 }
 
-[id='toggle-heart'] {
+#toggle-heart {
     position: absolute;
-    left: -100vw;
+    font-size: 2em;
+    cursor: pointer;
+    margin: 2% 40% 5% 40%;
+    color:#aab8c2;
 }
-
-[for='toggle-heart'] {
+.grey {
     color: #aab8c2;
 }
 
-[id='toggle-heart']:checked + label {
+.red {
     color: #e2264d;
 }
 
-[for='toggle-heart'] {
-    font-size: 2em;
+.locations li {
     cursor: pointer;
-    margin: 0 40%;
 }
 
 .loc-list ul li {
