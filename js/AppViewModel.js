@@ -72,8 +72,7 @@ function initMap() {
             }
         };
 
-        this.SFlocations = ko.observableArray (locations);
-
+        this.locations = ko.observableArray (locations);
 
         this.liClick = function (){
 
@@ -85,6 +84,7 @@ function initMap() {
             markers.push(this.marker);
             populateInfoWindow(this.marker,largeInfowindow);
         }
+
     }
 
 
