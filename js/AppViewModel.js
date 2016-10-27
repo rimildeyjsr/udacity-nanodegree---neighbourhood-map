@@ -1,4 +1,4 @@
-function AppViewModel (){
+function AppViewModel() {
 
     this.SomeValue = ko.observable("Show Less");
 
@@ -35,15 +35,14 @@ function AppViewModel (){
     )
 
     this.liClick = function (){
-        Infowindow = new google.maps.InfoWindow();
+
         this.marker = new google.maps.Marker({
             map: map,
             position: this.location,
             title: this.title
         });
-        populateInfoWindow(this.marker,Infowindow);
+        markers.push(this.marker);
+        populateInfoWindow(this.marker,largeInfowindow);
     }
 }
 
-// Activates knockout.js
-ko.applyBindings(new AppViewModel());

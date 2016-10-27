@@ -49,7 +49,7 @@
     <script src="js/AppViewModel.js"></script>
     <script src="https://use.fontawesome.com/83638a08d2.js"></script>
     <script>
-        var map; //map variable
+        var map,largeInfowindow; //map variable
         var markers = []; //array to push markers
         function initMap() {
             //function to initialise the map with given coordinates
@@ -81,7 +81,7 @@
 
 
             //variable to store infowindow
-            var largeInfowindow = new google.maps.InfoWindow();
+            largeInfowindow = new google.maps.InfoWindow();
             //variable to store the bounds
             var bounds = new google.maps.LatLngBounds();
 
@@ -109,19 +109,21 @@
             //make sure the map 'fits' to the bounds
             map.fitBounds(bounds);
 
+            // Activates knockout.js
+            ko.applyBindings(new AppViewModel());
+
         }
 
         //will populate the infowindow
         function populateInfoWindow(marker, infowindow) {
             // Check to make sure the infowindow is not already opened on this marker.
-            console.log("here");
             if (infowindow.marker != marker) {
                 infowindow.marker = marker;
                 infowindow.setContent('<div>' + marker.title + '</div>');
                 infowindow.open(map, marker);
                 // Make sure the marker property is cleared if the infowindow is closed.
                 infowindow.addListener('closeclick',function(){
-                    infowindow.setMarker(null);
+                    infowindow.marker = null;
                 });
             }
         }
