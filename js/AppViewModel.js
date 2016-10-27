@@ -80,21 +80,26 @@ function initMap() {
             populateInfoWindow(location.markerRef,largeInfowindow);
         }
 
-    }
+        this.colorVal = ko.observable(false);
+        this.changeColor = ko.pureComputed(function (){
+            return this.colorVal() ? "red" : "grey";
+        });
 
-    this.colorVal = ko.observable(false);
-    this.changeColor = ko.pureComputed(function (){
-       return this.colorChanger() === 'true'? "red" : "grey";
-        console.log(this.colorVal);
-    });
-    this.colorChanger = function(){
-        return (!this.colorVal);
+        this.colorChanger = function(){
+            this.colorVal() ? this.colorVal(false) : this.colorVal(true);
+        }
+
     }
 
     // Activates knockout.js
     ko.applyBindings(new AppViewModel());
 
-}
+    }
+
+
+
+
+
 
 //will populate the infowindow
 function populateInfoWindow(marker, infowindow) {

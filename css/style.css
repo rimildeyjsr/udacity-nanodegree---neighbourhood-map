@@ -74,11 +74,11 @@ body {
     margin: 2% 40% 5% 40%;
     color:#aab8c2;
 }
-.grey {
+#toggle-heart.grey {
     color: #aab8c2;
 }
 
-.red {
+#toggle-heart.red {
     color: #e2264d;
 }
 

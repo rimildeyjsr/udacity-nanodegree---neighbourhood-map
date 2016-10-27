@@ -26,7 +26,7 @@
             <input id="enter-search" placeholder="Filter Locations" type="search">
             <button id="filter"><i class="fa fa-filter" aria-hidden="true"></i>   Filter</button>
 
-            <p id="toggle-heart" data-bind="click: colorChanger, css: changeColor">❤</p>
+            <p id="toggle-heart" data-bind="click: $root.colorChanger, css:{red : colorVal} ">❤</p>
             <br><br><br><hr>
             <div class="loc-list">
                 <ul class="locations" data-bind="foreach: locations">
