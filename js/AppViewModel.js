@@ -60,6 +60,7 @@ function initMap() {
         markers.push(marker);
         marker.addListener('click', function() {
             //will call the function to populate the infowindow
+            setDefaultIcons();
             this.setIcon(clickedIcon);
             populateInfoWindow(this, largeInfowindow);
         });
@@ -96,6 +97,7 @@ function initMap() {
         this.locations = ko.observableArray (locations);
 
         this.liClick = function (location){
+            setDefaultIcons();
             location.markerRef.setIcon(clickedIcon);
             populateInfoWindow(location.markerRef,largeInfowindow);
         }
@@ -114,12 +116,25 @@ function initMap() {
         this.filteredItems = ko.computed(function(){
             var filter = this.filter().toLowerCase();
             if(!filter){
+
+                for(var i=0; i<this.locations.length; i++){
+                    this.locations[i].markerRef.setVisible(true);
+                }
                 return this.locations();
             }
             else {
-                return ko.utils.arrayFilter(this.locations(), function(item) {
-                    return stringStartsWith(item.title.toLowerCase(), filter);
-                });
+                for(var i=0; i<this.locations.length; i++) {
+                    if ( this.locations[i].title.toLowerCase().indexOf(filter) >= 0 )
+                    {
+                        this.locations[i].markerRef.setVisible(true);
+
+                    }
+                    else
+                    {
+                        this.locations[i].markerRef.setVisible(false);
+                        return this.locations[i];
+                    }
+                }
             }
 
         },this);
@@ -156,7 +171,11 @@ function populateInfoWindow(marker, infowindow) {
     }
 }
 
-
+function setDefaultIcons(){
+    for (var i=0; i<location.length; i++){
+        location[i].markerRef.setIcon(defaultIcon);
+    }
+}
 
 
 
