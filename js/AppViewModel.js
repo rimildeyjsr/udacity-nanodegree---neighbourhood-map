@@ -89,6 +89,22 @@ function initMap() {
             this.colorVal() ? this.colorVal(false) : this.colorVal(true);
         }
 
+        this.filter = ko.observable('');
+
+        this.filteredItems = ko.computed(function(){
+            var filter = this.filter().toLowerCase();
+            if(!filter){
+                return this.locations();
+            }
+            else {
+                return ko.utils.arrayFilter(this.locations(), function(item) {
+                    return stringStartsWith(item.title.toLowerCase(), filter);
+                });
+            }
+
+        },this);
+
+
     }
 
     // Activates knockout.js
@@ -96,7 +112,12 @@ function initMap() {
 
     }
 
-
+var stringStartsWith = function (string, startsWith) {
+    string = string || "";
+    if (startsWith.length > string.length)
+        return false;
+    return string.substring(0, startsWith.length) === startsWith;
+};
 
 
 
