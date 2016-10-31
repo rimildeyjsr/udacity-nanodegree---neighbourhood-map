@@ -23,7 +23,7 @@
         <div id="side-bar">
             <input type="button" id="show-less-more" data-bind="click: $root.ShowLessMore, value: SomeValue">
             <h1>Locations of Interest in<br> San Francisco</h1>
-            <input id="enter-search" placeholder="Filter Locations" type="search" data-bind="value: filter, valueUpdate:'afterKeyDown'">
+            <input id="enter-search" placeholder="Filter Locations" type="search" data-bind="textInput: filter, valueUpdate:'afterKeyDown'">
             <button id="filter"><i class="fa fa-filter" aria-hidden="true"></i>   Filter</button>
 
             <p id="toggle-heart" data-bind="click: $root.colorChanger, css:{red : colorVal} ">❤</p>
