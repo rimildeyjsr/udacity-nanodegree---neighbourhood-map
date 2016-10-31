@@ -1,12 +1,19 @@
 var map,largeInfowindow,marker; //map,infowindow and marker variable
 var markers = []; //array to push markers
 
+var defaultIcon;
+var clickedIcon;
+
 function initMap() {
     //function to initialise the map with given coordinates
     map = new google.maps.Map(document.getElementById("map"),{
         center: {lat: 37.7749, lng: -122.4525},
         zoom: 13
     });
+
+    defaultIcon = makeMarkerIcon('F7544B');
+    clickedIcon = makeMarkerIcon('1A911B');
+
     //array of locations in san francisco
     var locations = [
         {title: 'Alcatraz Islands', location: {lat: 37.8270 , lng: -122.4230},markerRef: null},
@@ -44,6 +51,7 @@ function initMap() {
             map: map,
             position: position,
             title: title,
+            icon: defaultIcon,
             animation: google.maps.Animation.DROP,
             id: i
         });
@@ -52,6 +60,7 @@ function initMap() {
         markers.push(marker);
         marker.addListener('click', function() {
             //will call the function to populate the infowindow
+            this.setIcon(clickedIcon);
             populateInfoWindow(this, largeInfowindow);
         });
         //extend boundaries of the map according to the lat long of the place
@@ -59,6 +68,17 @@ function initMap() {
     }
     //make sure the map 'fits' to the bounds
     map.fitBounds(bounds);
+
+    function makeMarkerIcon(markerColor) {
+        var markerImage = new google.maps.MarkerImage(
+            'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor +
+            '|40|_|%E2%80%A2',
+            new google.maps.Size(21, 34),
+            new google.maps.Point(0, 0),
+            new google.maps.Point(10, 34),
+            new google.maps.Size(21,34));
+        return markerImage;
+    }
 
     function AppViewModel() {
 
@@ -76,7 +96,7 @@ function initMap() {
         this.locations = ko.observableArray (locations);
 
         this.liClick = function (location){
-
+            location.markerRef.setIcon(clickedIcon);
             populateInfoWindow(location.markerRef,largeInfowindow);
         }
 
@@ -121,7 +141,6 @@ var stringStartsWith = function (string, startsWith) {
 
 
 
-
 //will populate the infowindow
 function populateInfoWindow(marker, infowindow) {
     // Check to make sure the infowindow is not already opened on this marker.
@@ -132,6 +151,7 @@ function populateInfoWindow(marker, infowindow) {
         // Make sure the marker property is cleared if the infowindow is closed.
         infowindow.addListener('closeclick',function(){
             infowindow.marker = null;
+            marker.setIcon(defaultIcon);
         });
     }
 }
