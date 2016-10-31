@@ -117,22 +117,22 @@ function initMap() {
             var filter = this.filter().toLowerCase();
             if(!filter){
 
-                for(var i=0; i<this.locations.length; i++){
-                    this.locations[i].markerRef.setVisible(true);
+                for(var i=0; i<this.locations().length; i++){
+                    this.locations()[i].markerRef.setVisible(true);
                 }
                 return this.locations();
             }
             else {
-                for(var i=0; i<this.locations.length; i++) {
-                    if ( this.locations[i].title.toLowerCase().indexOf(filter) >= 0 )
+                for(var i=0; i<this.locations().length; i++) {
+                    if ( this.locations()[i].title.toLowerCase().indexOf(filter) >= 0 )
                     {
-                        this.locations[i].markerRef.setVisible(true);
+                        this.locations()[i].markerRef.setVisible(true);
 
                     }
                     else
                     {
-                        this.locations[i].markerRef.setVisible(false);
-                        return this.locations[i];
+                        this.locations()[i].markerRef.setVisible(false);
+                        return this.locations()[i];
                     }
                 }
             }
@@ -161,7 +161,7 @@ function populateInfoWindow(marker, infowindow) {
     // Check to make sure the infowindow is not already opened on this marker.
     if (infowindow.marker != marker) {
         infowindow.marker = marker;
-        infowindow.setContent('<div>' + marker.title + '</div>');
+        infowindow.setContent('<div>' + marker.title + '<p id="toggle-heart" data-bind="click: $root.colorChanger, css:{red : colorVal} ">❤</p></div>');
         infowindow.open(map, marker);
         // Make sure the marker property is cleared if the infowindow is closed.
         infowindow.addListener('closeclick',function(){
