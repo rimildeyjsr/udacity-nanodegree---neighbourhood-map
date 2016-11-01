@@ -83,14 +83,16 @@ function initMap() {
     function AppViewModel() {
         //implementation of knockout
         this.SomeValue = ko.observable("Show Less");
-
+        this.visibleVal = ko.observable(1);
         this.ShowLessMore = function(){
             //toggles between the string "show more" and "show less" on click
             if (this.SomeValue() == "Show Less"){
                 this.SomeValue("Show More");
+                this.visibleVal(0);
             }
             else if(this.SomeValue() == "Show More"){
                 this.SomeValue("Show Less");
+                this.visibleVal(1);
             }
         };
 
