@@ -149,7 +149,10 @@ function initMap() {
     }
 
 function googleError(){
-    document.getElementById('error').append = "Error! Map won't load!";
+    if(typeof google === 'undefined' || google === null){
+        document.getElementById('error').append = "Error! Map won't load!";
+    }
+
 }
 
 function stringWith (string, startsWith) {
@@ -177,11 +180,7 @@ function populateInfoWindow(marker, infowindow) {
     }
 }
 
-function onerror(){
-    if(typeof google === 'undefined' || google === null){
 
-    }
-}
 
 
 
