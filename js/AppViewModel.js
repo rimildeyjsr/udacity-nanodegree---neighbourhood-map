@@ -120,11 +120,22 @@ function initMap() {
             //returns locations based on the filter text entered by the user
             var filter = this.filter().toLowerCase();
             if(!filter){
+                for (marker in this.locations()){
+                    this.locations()[marker].markerRef.setVisible(true);
+                }
                 return this.locations();
+
             }
             else {
                 return ko.utils.arrayFilter(this.locations(), function(item) {
-                    return stringWith(item.title.toLowerCase(), filter);
+                    var match =  stringWith(item.title.toLowerCase(), filter);
+                    if (match === true){
+                        item.markerRef.setVisible(true);
+                    }
+                    else {
+                        item.markerRef.setVisible(false);
+                    }
+                    return match;
                 });
             }
 
