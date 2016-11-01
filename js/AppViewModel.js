@@ -42,7 +42,6 @@ function initMap() {
     var bounds = new google.maps.LatLngBounds();
 
     for (var i = 0; i < locations.length; i++) {
-
         var position = locations[i].location; //position of the location at ith index
         var title = locations[i].title; //name of the location in question
         //marker created
@@ -117,7 +116,7 @@ function initMap() {
         this.filter = ko.observable('');
 
         this.filteredItems = ko.computed(function(){
-            //returns locations based on the filter text entered by the user
+            //returns locations based on the filter text entered by the user. Also toggles visibilty of the markers.
             var filter = this.filter().toLowerCase();
             if(!filter){
                 for (marker in this.locations()){
@@ -149,18 +148,19 @@ function initMap() {
 
     }
 
-var stringWith = function (string, startsWith) {
+function googleError(){
+    document.getElementById('error').append = "Error! Map won't load!";
+}
+
+function stringWith (string, startsWith) {
     //checks if the string contains the entered filter text, if yes, returns true else returns false
     if (string.indexOf(startsWith) >= 0){
-
         return true;
     }
     else{
         return false;
     }
 };
-
-
 
 //will populate the infowindow
 function populateInfoWindow(marker, infowindow) {
@@ -177,7 +177,11 @@ function populateInfoWindow(marker, infowindow) {
     }
 }
 
+function onerror(){
+    if(typeof google === 'undefined' || google === null){
 
+    }
+}
 
 
 
