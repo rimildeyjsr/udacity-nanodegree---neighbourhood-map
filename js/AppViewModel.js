@@ -133,10 +133,13 @@ function initMap() {
     }
 
 var stringStartsWith = function (string, startsWith) {
-    string = string || "";
-    if (startsWith.length > string.length)
+
+    if (string.indexOf(startsWith) >= 0){
+        return true;
+    }
+    else{
         return false;
-    return string.substring(0, startsWith.length) === startsWith;
+    }
 };
 
 
