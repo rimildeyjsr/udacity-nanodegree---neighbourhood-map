@@ -1,8 +1,7 @@
 var map,largeInfowindow,marker; //map,infowindow and marker variable
 var markers = []; //array to push markers
 
-var defaultIcon;
-var clickedIcon;
+var defaultIcon,clickedIcon; //variables to store different icon colors
 
 function initMap() {
     //function to initialise the map with given coordinates
@@ -11,8 +10,8 @@ function initMap() {
         zoom: 13
     });
 
-    defaultIcon = makeMarkerIcon('F7544B');
-    clickedIcon = makeMarkerIcon('1A911B');
+    defaultIcon = makeMarkerIcon('F7544B'); //red color default icon
+    clickedIcon = makeMarkerIcon('1A911B'); //green color default icon
 
     //array of locations in san francisco
     var locations = [
@@ -70,6 +69,7 @@ function initMap() {
     map.fitBounds(bounds);
 
     function makeMarkerIcon(markerColor) {
+        //makes a marker with a specified color, specified as parameter
         var markerImage = new google.maps.MarkerImage(
             'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor +
             '|40|_|%E2%80%A2',
@@ -81,10 +81,11 @@ function initMap() {
     }
 
     function AppViewModel() {
-
+        //implementation of knockout
         this.SomeValue = ko.observable("Show Less");
 
         this.ShowLessMore = function(){
+            //toggles between the string "show more" and "show less" on click
             if (this.SomeValue() == "Show Less"){
                 this.SomeValue("Show More");
             }
@@ -96,12 +97,14 @@ function initMap() {
         this.locations = ko.observableArray (locations);
 
         this.liClick = function (location){
+            //opens respective markers' info windows and changes color of the marker
             location.markerRef.setIcon(clickedIcon);
-            populateInfoWindow(location.markerRef,largeInfowindow);
+            populateInfoWindow(location.markerRef,largeInfowindow)
         }
 
         this.colorVal = ko.observable(false);
         this.changeColor = ko.pureComputed(function (){
+            //switches color of the heart icon from red to grey and vice versa
             return this.colorVal() ? "red" : "grey";
         });
 
@@ -112,13 +115,14 @@ function initMap() {
         this.filter = ko.observable('');
 
         this.filteredItems = ko.computed(function(){
+            //returns locations based on the filter text entered by the user
             var filter = this.filter().toLowerCase();
             if(!filter){
                 return this.locations();
             }
             else {
                 return ko.utils.arrayFilter(this.locations(), function(item) {
-                    return stringStartsWith(item.title.toLowerCase(), filter);
+                    return stringWith(item.title.toLowerCase(), filter);
                 });
             }
 
@@ -132,9 +136,10 @@ function initMap() {
 
     }
 
-var stringStartsWith = function (string, startsWith) {
-
+var stringWith = function (string, startsWith) {
+    //checks if the string contains the entered filter text, if yes, returns true else returns false
     if (string.indexOf(startsWith) >= 0){
+
         return true;
     }
     else{
