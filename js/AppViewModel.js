@@ -60,7 +60,6 @@ function initMap() {
         markers.push(marker);
         marker.addListener('click', function() {
             //will call the function to populate the infowindow
-            setDefaultIcons();
             this.setIcon(clickedIcon);
             populateInfoWindow(this, largeInfowindow);
         });
@@ -97,7 +96,6 @@ function initMap() {
         this.locations = ko.observableArray (locations);
 
         this.liClick = function (location){
-            setDefaultIcons();
             location.markerRef.setIcon(clickedIcon);
             populateInfoWindow(location.markerRef,largeInfowindow);
         }
@@ -116,25 +114,12 @@ function initMap() {
         this.filteredItems = ko.computed(function(){
             var filter = this.filter().toLowerCase();
             if(!filter){
-
-                for(var i=0; i<this.locations().length; i++){
-                    this.locations()[i].markerRef.setVisible(true);
-                }
                 return this.locations();
             }
             else {
-                for(var i=0; i<this.locations().length; i++) {
-                    if ( this.locations()[i].title.toLowerCase().indexOf(filter) >= 0 )
-                    {
-                        this.locations()[i].markerRef.setVisible(true);
-
-                    }
-                    else
-                    {
-                        this.locations()[i].markerRef.setVisible(false);
-                        return this.locations()[i];
-                    }
-                }
+                return ko.utils.arrayFilter(this.locations(), function(item) {
+                    return stringStartsWith(item.title.toLowerCase(), filter);
+                });
             }
 
         },this);
@@ -161,7 +146,7 @@ function populateInfoWindow(marker, infowindow) {
     // Check to make sure the infowindow is not already opened on this marker.
     if (infowindow.marker != marker) {
         infowindow.marker = marker;
-        infowindow.setContent('<div>' + marker.title + '<p id="toggle-heart" data-bind="click: $root.colorChanger, css:{red : colorVal} ">❤</p></div>');
+        infowindow.setContent('<div>' + marker.title + '</div>');
         infowindow.open(map, marker);
         // Make sure the marker property is cleared if the infowindow is closed.
         infowindow.addListener('closeclick',function(){
@@ -171,11 +156,7 @@ function populateInfoWindow(marker, infowindow) {
     }
 }
 
-function setDefaultIcons(){
-    for (var i=0; i<location.length; i++){
-        location[i].markerRef.setIcon(defaultIcon);
-    }
-}
+
 
 
 
