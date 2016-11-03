@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="caaf42fd-8610-44e6-9458-85f01d1d9f9c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/AppViewModel.js" afterPath="$PROJECT_DIR$/js/AppViewModel.js" />
     </list>
     <ignored path="neighbourhood map.iws" />
@@ -37,8 +36,8 @@
       <file leaf-file-name="AppViewModel.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/AppViewModel.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.77557755">
-              <caret line="105" column="46" selection-start-line="105" selection-start-column="46" selection-end-line="105" selection-end-column="46" />
+            <state vertical-scroll-proportion="0.4950495">
+              <caret line="243" column="19" selection-start-line="243" selection-start-column="19" selection-end-line="243" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -576,8 +575,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/AppViewModel.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.77557755">
-          <caret line="105" column="46" selection-start-line="105" selection-start-column="46" selection-end-line="105" selection-end-column="46" />
+        <state vertical-scroll-proportion="0.4950495">
+          <caret line="243" column="19" selection-start-line="243" selection-start-column="19" selection-end-line="243" selection-end-column="19" />
           <folding />
         </state>
       </provider>

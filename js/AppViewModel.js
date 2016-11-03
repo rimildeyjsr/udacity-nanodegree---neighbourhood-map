@@ -240,6 +240,9 @@ function stringWith (string, startsWith) {
 //will populate the infowindow
 function populateInfoWindow(marker, infowindow) {
     // Check to make sure the infowindow is not already opened on this marker.
+    if(infowindow.marker){
+        infowindow.marker.setIcon(defaultIcon);
+    }
     if (infowindow.marker != marker) {
         infowindow.marker = marker;
         infowindow.setContent('<div>' + marker.title + '</div>');
@@ -252,6 +255,7 @@ function populateInfoWindow(marker, infowindow) {
     }
 }
 
+//function to make ajax requests
 
 
 
