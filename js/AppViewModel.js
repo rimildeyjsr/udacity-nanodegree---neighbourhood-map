@@ -116,12 +116,15 @@ function initMap() {
     for (var i = 0; i < locations.length; i++) {
         var position = locations[i].location; //position of the location at ith index
         var title = locations[i].title; //name of the location in question
+        var venueId = locations[i].venueId;
         //marker created
         marker = new google.maps.Marker({
             map: map,
             position: position,
             title: title,
             icon: defaultIcon,
+            venueId: venueId,
+            likes:"",
             animation: google.maps.Animation.DROP,
             id: i
         });
@@ -250,13 +253,16 @@ function stringWith (string, startsWith) {
 function populateInfoWindow(marker, infowindow) {
 
     if(infowindow.marker){
-        //if any marker is lready open, change its color to the default red
+        //if any marker is already open, change its color to the default red
         infowindow.marker.setIcon(defaultIcon);
     }
     // Check to make sure the infowindow is not already opened on this marker.
     if (infowindow.marker != marker) {
+
         infowindow.marker = marker;
-        infowindow.setContent('<div>' + marker.title + '</div>');
+        apiData(marker);
+        var setContentInfo = '<h4>' + marker.title + '</h4>'+'<div>'+LikesOrNot(marker)+'</div>';
+        infowindow.setContent(setContentInfo);
         infowindow.open(map, marker);
         // Make sure the marker property is cleared if the infowindow is closed.
         infowindow.addListener('closeclick',function(){
@@ -266,7 +272,40 @@ function populateInfoWindow(marker, infowindow) {
     }
 }
 
-//function to make ajax requests
+//function to make ajax requests to the FourSquare API
+function apiData (marker){
+    $.ajax({
+        url: "https://api.foursquare.com/v2/venues/" + marker.venueId +
+        "?client_id=ODQGYWHSYJLQGDCQHDGCHCD2OOHKPDO3NQ34XDCXUZJNRXM2&client_secret=A5PWZ2I4IPTGVU1FBTHEJRB4PCE24CFDKDPOYTRTKEIEVTYI&v=20161104",
+        dataType: "json",
+        success: function(info){
+            marker.likes = info.response.venue.likes.summary;
+            console.log(marker.likes);
+        },
+        error: function(error){
+            alert("Problems to retrieve data from FourSquare! Sorry!");
+        }
+    });
+}
+
+function LikesOrNot(marker){
+    //returns likes for the given marker as parameter else returns error message
+    if(marker.likes === "" || marker.likes === undefined){
+        return "No data available!";
+    }
+    else {
+        return marker.likes;
+    }
+}
+
+
+
+
+
+
+
+
+
 
 
 
