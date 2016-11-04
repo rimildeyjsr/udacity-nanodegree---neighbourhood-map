@@ -128,6 +128,7 @@ function initMap() {
             animation: google.maps.Animation.DROP,
             id: i
         });
+        apiData(marker);
         //push the newly created marker's reference to the location array
         locations[i].markerRef = marker;
         //push every marker to an array of their own
@@ -260,7 +261,6 @@ function populateInfoWindow(marker, infowindow) {
     if (infowindow.marker != marker) {
 
         infowindow.marker = marker;
-        apiData(marker);
         var setContentInfo = '<h4>' + marker.title + '</h4>'+'<div>'+LikesOrNot(marker)+'</div>';
         infowindow.setContent(setContentInfo);
         infowindow.open(map, marker);
@@ -272,16 +272,22 @@ function populateInfoWindow(marker, infowindow) {
     }
 }
 
-//function to make ajax requests to the FourSquare API
 function apiData (marker){
+    //function to make ajax requests to the FourSquare API
+    //jquery ajax function
     $.ajax({
+        //url built from the required marker's venue id, client id and client secret
         url: "https://api.foursquare.com/v2/venues/" + marker.venueId +
         "?client_id=ODQGYWHSYJLQGDCQHDGCHCD2OOHKPDO3NQ34XDCXUZJNRXM2&client_secret=A5PWZ2I4IPTGVU1FBTHEJRB4PCE24CFDKDPOYTRTKEIEVTYI&v=20161104",
+        //datatype format
         dataType: "json",
+        //on success, perform the following operations
         success: function(info){
+            //store marker's likes
             marker.likes = info.response.venue.likes.summary;
             console.log(marker.likes);
         },
+        //on error, do the following
         error: function(error){
             alert("Problems to retrieve data from FourSquare! Sorry!");
         }
