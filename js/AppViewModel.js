@@ -153,52 +153,53 @@ function initMap() {
 
     function AppViewModel() {
         //implementation of knockout
-        this.SomeValue = ko.observable("Show Less");
-        this.visibleVal = ko.observable(1);
-        this.ShowLessMore = function(){
+        var self = this;
+        self.SomeValue = ko.observable("Hide list");
+        self.visibleVal = ko.observable(1);
+        self.ShowLessMore = function(){
             //toggles between the string "show more" and "show less" on click
-            if (this.SomeValue() == "Show Less"){
-                this.SomeValue("Show More");
-                this.visibleVal(0);
+            if (self.SomeValue() == "Hide list"){
+                self.SomeValue("Show List");
+                self.visibleVal(0);
             }
-            else if(this.SomeValue() == "Show More"){
-                this.SomeValue("Show Less");
-                this.visibleVal(1);
+            else if(self.SomeValue() == "Show List"){
+                self.SomeValue("Hide list");
+                self.visibleVal(1);
             }
         };
 
-        this.locations = ko.observableArray (locations);
+        self.locations = ko.observableArray (locations);
 
-        this.liClick = function (location){
+        self.liClick = function (location){
             //opens respective markers' info windows and changes color of the marker
             location.markerRef.setIcon(clickedIcon);
             populateInfoWindow(location.markerRef,largeInfowindow)
         }
 
-        this.colorVal = ko.observable(false);
-        this.changeColor = ko.pureComputed(function (){
+        self.colorVal = ko.observable(false);
+        self.changeColor = ko.pureComputed(function (){
             //switches color of the heart icon from red to grey and vice versa
-            return this.colorVal() ? "red" : "grey";
+            return self.colorVal() ? "red" : "grey";
         });
 
-        this.colorChanger = function(){
-            this.colorVal() ? this.colorVal(false) : this.colorVal(true);
+        self.colorChanger = function(){
+            this.colorVal() ? self.colorVal(false) : self.colorVal(true);
         }
 
-        this.filter = ko.observable('');
+        self.filter = ko.observable('');
 
-        this.filteredItems = ko.computed(function(){
+        self.filteredItems = ko.computed(function(){
             //returns locations based on the filter text entered by the user. Also toggles visibilty of the markers.
-            var filter = this.filter().toLowerCase();
+            var filter = self.filter().toLowerCase();
             if(!filter){
-                for (marker in this.locations()){
-                    this.locations()[marker].markerRef.setVisible(true);
+                for (marker in self.locations()){
+                    self.locations()[marker].markerRef.setVisible(true);
                 }
-                return this.locations();
+                return self.locations();
 
             }
             else {
-                return ko.utils.arrayFilter(this.locations(), function(item) {
+                return ko.utils.arrayFilter(self.locations(), function(item) {
                     var match =  stringWith(item.title.toLowerCase(), filter);
                     if (match === true){
                         item.markerRef.setVisible(true);
@@ -210,7 +211,7 @@ function initMap() {
                 });
             }
 
-        },this);
+        },self);
 
 
     }
