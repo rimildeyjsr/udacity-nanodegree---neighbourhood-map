@@ -49,6 +49,13 @@ body {
     margin: 20px 15px 20px 5px;
     text-align: center;
 }
+#info_heart {
+    z-index: 25;
+    color: white;
+    font-size: 1em;
+    margin: 20px 15px 20px 5px;
+    text-align: center;
+}
 
 #enter-search {
     width: 85%;

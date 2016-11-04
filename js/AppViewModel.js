@@ -1,12 +1,13 @@
-var map,largeInfowindow,marker; //map,infowindow and marker variable
+var map,largeInfowindow,marker,map_centre; //map,infowindow and marker variable
 var markers = []; //array to push markers
 
 var defaultIcon,clickedIcon; //variables to store different icon colors
 
 function initMap() {
     //function to initialise the map with given coordinates
+    map_centre = new google.maps.LatLng(37.7749, -122.45254);
     map = new google.maps.Map(document.getElementById("map"),{
-        center: {lat: 37.7749, lng: -122.4525},
+        center: map_centre,
         zoom: 18
     });
 
@@ -128,6 +129,7 @@ function initMap() {
             animation: google.maps.Animation.DROP,
             id: i
         });
+        //call the apiData marker to fetch likes for every location and store it in marker.likes
         apiData(marker);
         //push the newly created marker's reference to the location array
         locations[i].markerRef = marker;
@@ -182,7 +184,8 @@ function initMap() {
             populateInfoWindow(location.markerRef,largeInfowindow)
         }
 
-        self.colorVal = ko.observable(false);//observes true and falsevalue to change color of the heart
+        self.colorVal = ko.observable(false);//observes true and false values to change color of the heart
+        self.clickHeart = ko.observable(0);
         self.changeColor = ko.pureComputed(function (){
             //switches color of the heart icon from red to grey and vice versa
             return self.colorVal() ? "red" : "grey";
@@ -191,7 +194,9 @@ function initMap() {
         self.colorChanger = function(){
             //toggles true and false value of the observable
             this.colorVal() ? self.colorVal(false) : self.colorVal(true);
+            this.colorVal()? self.clickHeart(1) : self.clickHeart(0);
         }
+
 
         self.filter = ko.observable('');//observes value of the filter
 
@@ -262,7 +267,8 @@ function populateInfoWindow(marker, infowindow) {
 
         infowindow.marker = marker;
         var setContentInfo = '<h4>' + marker.title + '</h4>'+'<div>'+LikesOrNot(marker)+'</div>';
-        infowindow.setContent(setContentInfo);
+        var heart = '<h1>❤</h1>';
+        infowindow.setContent(setContentInfo + heart);
         infowindow.open(map, marker);
         // Make sure the marker property is cleared if the infowindow is closed.
         infowindow.addListener('closeclick',function(){
@@ -285,7 +291,6 @@ function apiData (marker){
         success: function(info){
             //store marker's likes
             marker.likes = info.response.venue.likes.summary;
-            console.log(marker.likes);
         },
         //on error, do the following
         error: function(error){
