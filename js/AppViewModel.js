@@ -11,7 +11,7 @@ function initMap() {
         zoom: 12
     });
 
-    defaultIcon = makeMarkerIcon('c0c0c0'); //white color default icon
+    defaultIcon = makeMarkerIcon('2f4f4f'); //grey color default icon
     clickedIcon = makeMarkerIcon('1a911b'); //green color default icon
 
     google.maps.event.addDomListener(window, 'resize', resize);
