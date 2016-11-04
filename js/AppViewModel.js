@@ -115,7 +115,7 @@ function initMap() {
     //variable to store the bounds
     bounds = new google.maps.LatLngBounds();
 
-    for (var i = 0; i < locations.length; i++) {
+    for (var i = 0,len = locations.length; i < len; i++) {
         var position = locations[i].location; //position of the location at ith index
         var title = locations[i].title; //name of the location in question
         var venueId = locations[i].venueId;
@@ -182,14 +182,18 @@ function initMap() {
             }
         };
 
+        self.changeOpacity = ko.pureComputed(function(){
+            return self.visibleVal() ? "normal" : "transparent";
+        });
+
         //stores location array as an observable locations array
         self.locations = ko.observableArray (locations);
 
         self.liClick = function (location){
             //opens respective markers' info windows and changes color of the marker
             location.markerRef.setIcon(clickedIcon);
-            populateInfoWindow(location.markerRef,largeInfowindow)
-        }
+            populateInfoWindow(location.markerRef,largeInfowindow);
+        };
 
         self.colorVal = ko.observable(false);//observes true and false values to change color of the heart
         self.clickHeart = ko.observable(0);
@@ -201,8 +205,8 @@ function initMap() {
         self.colorChanger = function(){
             //toggles true and false value of the observable
             this.colorVal() ? self.colorVal(false) : self.colorVal(true);
-            this.colorVal()? self.clickHeart(1) : self.clickHeart(0);
-        }
+            this.colorVal() ? self.clickHeart(1) : self.clickHeart(0);
+        };
 
 
         self.filter = ko.observable('');//observes value of the filter
@@ -223,14 +227,7 @@ function initMap() {
                 //else show only the filtered items of the array and their respective markers
                 return ko.utils.arrayFilter(self.locations(), function(item) {
                     var match =  stringWith(item.title.toLowerCase(), filter);
-                    if (match === true){
-                        //if match found, show marker
-                        item.markerRef.setVisible(true);
-                    }
-                    else {
-                        //if no match found, hide marker
-                        item.markerRef.setVisible(false);
-                    }
+                    item.markerRef.setVisible(match);
                     return match;
                 });
             }
@@ -243,24 +240,19 @@ function initMap() {
     // Activates knockout.js
     ko.applyBindings(new AppViewModel());
 
-    }
+}
 
 function googleError(){
-        //if their is any error loading the map, alert the user
-        alert("Error! Map won't load!");
+    //if their is any error loading the map, alert the user
+    alert("Error! Map won't load!");
 
 
 }
 
 function stringWith (string, startsWith) {
     //checks if the string contains the entered filter text, if yes, returns true else returns false
-    if (string.indexOf(startsWith) >= 0){
-        return true;
-    }
-    else{
-        return false;
-    }
-};
+    return (string.indexOf(startsWith) >= 0);
+}
 
 //will populate the infowindow
 function populateInfoWindow(marker, infowindow) {
