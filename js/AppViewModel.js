@@ -125,11 +125,12 @@ function initMap() {
             animation: google.maps.Animation.DROP,
             id: i
         });
-        //push the newly created marker to the array
+        //push the newly created marker's reference to the location array
         locations[i].markerRef = marker;
+        //push every marker to an array of their own
         markers.push(marker);
         marker.addListener('click', function() {
-            //will call the function to populate the infowindow
+            //will call the function to populate the infowindow when any marker is clicked
             this.setIcon(clickedIcon);
             populateInfoWindow(this, largeInfowindow);
         });
@@ -140,7 +141,7 @@ function initMap() {
     map.fitBounds(bounds);
 
     function makeMarkerIcon(markerColor) {
-        //makes a marker with a specified color, specified as parameter
+        //makes a marker with a specified color,the color being specified as parameter
         var markerImage = new google.maps.MarkerImage(
             'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor +
             '|40|_|%E2%80%A2',
@@ -153,11 +154,11 @@ function initMap() {
 
     function AppViewModel() {
         //implementation of knockout
-        var self = this;
-        self.SomeValue = ko.observable("Hide list");
-        self.visibleVal = ko.observable(1);
+        var self = this; //reference to this
+        self.SomeValue = ko.observable("Hide list"); //observes the value of the red button hiding or showing the list
+        self.visibleVal = ko.observable(1);//stores 0 or 1 and affects visibility of the list
         self.ShowLessMore = function(){
-            //toggles between the string "show more" and "show less" on click
+            //toggles between the string "hide list" and "show list" on click
             if (self.SomeValue() == "Hide list"){
                 self.SomeValue("Show List");
                 self.visibleVal(0);
@@ -168,6 +169,7 @@ function initMap() {
             }
         };
 
+        //stores location array as an observable locations array
         self.locations = ko.observableArray (locations);
 
         self.liClick = function (location){
@@ -176,35 +178,41 @@ function initMap() {
             populateInfoWindow(location.markerRef,largeInfowindow)
         }
 
-        self.colorVal = ko.observable(false);
+        self.colorVal = ko.observable(false);//observes true and falsevalue to change color of the heart
         self.changeColor = ko.pureComputed(function (){
             //switches color of the heart icon from red to grey and vice versa
             return self.colorVal() ? "red" : "grey";
         });
 
         self.colorChanger = function(){
+            //toggles true and false value of the observable
             this.colorVal() ? self.colorVal(false) : self.colorVal(true);
         }
 
-        self.filter = ko.observable('');
+        self.filter = ko.observable('');//observes value of the filter
 
         self.filteredItems = ko.computed(function(){
-            //returns locations based on the filter text entered by the user. Also toggles visibilty of the markers.
+            //returns locations based on the filter text entered by the user. Also toggles visibility of the markers.
             var filter = self.filter().toLowerCase();
             if(!filter){
+                //if no filter is applied, show all locations and their markers
                 for (marker in self.locations()){
+                    //shows all markers
                     self.locations()[marker].markerRef.setVisible(true);
                 }
                 return self.locations();
 
             }
             else {
+                //else show only the filtered items of the array and their respective markers
                 return ko.utils.arrayFilter(self.locations(), function(item) {
                     var match =  stringWith(item.title.toLowerCase(), filter);
                     if (match === true){
+                        //if match found, show marker
                         item.markerRef.setVisible(true);
                     }
                     else {
+                        //if no match found, hide marker
                         item.markerRef.setVisible(false);
                     }
                     return match;
@@ -222,7 +230,7 @@ function initMap() {
     }
 
 function googleError(){
-
+        //if their is any error loading the map, alert the user
         alert("Error! Map won't load!");
 
 
@@ -240,10 +248,12 @@ function stringWith (string, startsWith) {
 
 //will populate the infowindow
 function populateInfoWindow(marker, infowindow) {
-    // Check to make sure the infowindow is not already opened on this marker.
+
     if(infowindow.marker){
+        //if any marker is lready open, change its color to the default red
         infowindow.marker.setIcon(defaultIcon);
     }
+    // Check to make sure the infowindow is not already opened on this marker.
     if (infowindow.marker != marker) {
         infowindow.marker = marker;
         infowindow.setContent('<div>' + marker.title + '</div>');
