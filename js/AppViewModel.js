@@ -11,8 +11,8 @@ function initMap() {
         zoom: 12
     });
 
-    defaultIcon = makeMarkerIcon('F7544B'); //red color default icon
-    clickedIcon = makeMarkerIcon('1A911B'); //green color default icon
+    defaultIcon = makeMarkerIcon('c0c0c0'); //white color default icon
+    clickedIcon = makeMarkerIcon('1a911b'); //green color default icon
 
     google.maps.event.addDomListener(window, 'resize', resize);
     //array of locations in san francisco
@@ -266,7 +266,7 @@ function stringWith (string, startsWith) {
 function populateInfoWindow(marker, infowindow) {
 
     if(infowindow.marker){
-        //if any marker is already open, change its color to the default red
+        //if any marker is already open, change its color to the default color
         infowindow.marker.setIcon(defaultIcon);
     }
     // Check to make sure the infowindow is not already opened on this marker.
@@ -274,8 +274,7 @@ function populateInfoWindow(marker, infowindow) {
 
         infowindow.marker = marker;
         var setContentInfo = '<h4>' + marker.title + '</h4>'+'<div>'+LikesOrNot(marker)+'</div>';
-        var heart = '<h1>❤</h1>';
-        infowindow.setContent(setContentInfo + heart);
+        infowindow.setContent(setContentInfo);
         infowindow.open(map, marker);
         // Make sure the marker property is cleared if the infowindow is closed.
         infowindow.addListener('closeclick',function(){
