@@ -104,17 +104,26 @@ body {
 
 @media screen and (min-width:320px)  {
     /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+    #side-bar{
+        width: 48%;
+    }
 }
 @media screen and (min-width:480px)  {
     /* smartphones, Android phones, landscape iPhone */
+    #side-bar{
+        width: 45%;
+    }
 }
 @media screen and (min-width:600px)  {
     /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+    #side-bar{
+        width: 40%;
+    }
 }
 @media screen and (min-width: 755px) {
     /*random breakpoint based on design*/
     #side-bar{
-        width: 30%;
+        width: 35%;
     }
 }
 @media screen and (min-width:801px)  {
