@@ -1,4 +1,4 @@
-var map,largeInfowindow,marker,map_centre; //map,infowindow and marker variable
+var map,largeInfowindow,marker,map_centre,bounds; //map,infowindow and marker variable
 var markers = []; //array to push markers
 
 var defaultIcon,clickedIcon; //variables to store different icon colors
@@ -8,12 +8,13 @@ function initMap() {
     map_centre = new google.maps.LatLng(37.7749, -122.45254);
     map = new google.maps.Map(document.getElementById("map"),{
         center: map_centre,
-        zoom: 18
+        zoom: 12
     });
 
     defaultIcon = makeMarkerIcon('F7544B'); //red color default icon
     clickedIcon = makeMarkerIcon('1A911B'); //green color default icon
 
+    google.maps.event.addDomListener(window, 'resize', resize);
     //array of locations in san francisco
     var locations = [
         {   title: 'Alcatraz Islands',
@@ -112,7 +113,7 @@ function initMap() {
     //variable to store infowindow
     largeInfowindow = new google.maps.InfoWindow();
     //variable to store the bounds
-    var bounds = new google.maps.LatLngBounds();
+    bounds = new google.maps.LatLngBounds();
 
     for (var i = 0; i < locations.length; i++) {
         var position = locations[i].location; //position of the location at ith index
@@ -143,8 +144,14 @@ function initMap() {
         //extend boundaries of the map according to the lat long of the place
         bounds.extend(markers[i].position);
     }
-    //make sure the map 'fits' to the bounds
-    map.fitBounds(bounds);
+
+    function resize(){
+        //re-centre the map
+        map.setCenter(map_centre);
+        //make sure the map 'fits' to the bounds
+        map.fitBounds(bounds);
+    }
+
 
     function makeMarkerIcon(markerColor) {
         //makes a marker with a specified color,the color being specified as parameter
